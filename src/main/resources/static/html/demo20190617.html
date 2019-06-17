@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo20190617</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app-1">
+        <p>{{message}}</p>
+        <p>{{computedMessage}}</p>
+        <p>{{methodMessage()}}</p>
+    </div>
+    <div id="app-2">
+        <div v-if="loginType == 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username-input">
+        </div>
+        <div v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="email-input">
+        </div>
+        <a v-on:click="change()"></a>
+    </div>
+</body>
+<script type="text/javascript">
+    var app1 = new Vue({
+        el: '#app-1',
+        data: {
+            message: ''
+        },
+        computed: {
+            computedMessage: function () {
+                return this.message.split('').reverse().join('');
+            }
+        },
+        methods: {
+            methodMessage: function () {
+                return this.message.split('').reverse().join('');
+            }
+        }
+    });
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            loginType: 'username'
+        },
+        methods: {
+            change: function () {
+                this.loginType = 'email';
+            }
+        }
+    });
+</script>
+</html>

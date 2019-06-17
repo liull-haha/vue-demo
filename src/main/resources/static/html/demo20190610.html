@@ -3,19 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>demo20190610</title>
-    <script src="/static/js/vue.js"></script>
+    <script src="../js/vue.js"></script>
 </head>
 <body>
     <div id="app">
         {{ message }}
     </div>
-    <script>
-        var vue = new Vue({
-            el: '#app',
-            data: {
-                message: 'hello vue!'
-            }
-        });
-    </script>
+    <div id="app-2">
+        <span v-bind:title="message" v-if="flag">liull</span>
+    </div>
+    <div id="app-3">
+        <ol>
+            <li v-for="item in list">{{item.text}}</li>
+        </ol>
+    </div>
+    <div id="app-4">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage()">逆转消息</button>
+    </div>
+    <div id="app-5">
+        <p>{{text}}</p>
+        <input type="text" v-model="text">
+    </div>
+    <div id="app-6">
+        <span>{{text}}</span>
+        <p>liull: <span v-html="text"></span></p>
+    </div>
 </body>
+<script type="text/javascript">
+    var app1 = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello liull!'
+        }
+    });
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: 'hello sgf!' + new Date().toLocaleDateString(),
+            flag: false
+        }
+    });
+    var app3 = new Vue({
+        el: '#app-3',
+        data: {
+            list: [
+                {text: '学习 JavaScript'},
+                {text: '学习 Jquery'},
+                {text: '学习 Vuejs'}
+            ]
+        }
+    });
+    var app4 = new Vue({
+        el: "#app-4",
+        data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    });
+    var app5 = new Vue({
+        el: "#app-5",
+        data: {
+            text: ''
+        }
+    });
+    var app6 = new Vue({
+        el: "#app-6",
+        data: {
+            text: '<span style="color: red"> sgf </span>'
+        }
+    });
+</script>
 </html>
