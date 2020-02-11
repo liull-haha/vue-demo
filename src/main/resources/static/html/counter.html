@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <counter ref="one" v-on:change="handleChange"></counter>
+        <counter ref="two" v-on:change="handleChange"></counter>
+        <div>{{total}}</div>
+    </div>
+    <div id="root2">
+        <counter-two v-bind:count="value1" v-on:inc="handleInc"></counter-two>
+        <counter-two v-bind:count="value2" v-on:inc="handleInc"></counter-two>
+        <div>{{total}}</div>
+    </div>
+</body>
+<script>
+    var counter1 = {
+        data: function() {
+            return {
+                number: 0
+            }
+        },
+        template: "<div v-on:click='handleDivClick'>{{number}}</div>",
+        methods: {
+            handleDivClick: function () {
+                this.number ++;
+                this.$emit("change");
+            }
+        }
+    };
+    var vm = new Vue({
+        el: "#root",
+        components: {
+            "counter": counter1
+        },
+        data: {
+            total: 0
+        },
+        methods: {
+            handleChange: function () {
+                this.total = this.$refs.one.number + this.$refs.two.number;
+            }
+        }
+    });
+
+    var counter2 = {
+        /*子组件不允许改变父组件传递过来的变量，即this.count++是错误的*/
+        props: ["count"],//v-bind:count--父组件向子组件传递count变量值，props里接受变量值。
+        data: function () {
+            return {
+                number: this.count
+            }
+        },
+        template: "<div v-on:click='handleClick'>{{number}}</div>",
+        methods: {
+            handleClick: function () {
+                this.number ++;
+                this.$emit("inc",1);//子组件通过出发事件向父组件传值，inc为事件名，1为传递值,可以传递多个值。
+            }
+        }
+    };
+    var vm2 = new Vue({
+        el: "#root2",
+        data: {
+            value1: 0,
+            value2: 0,
+            total: 0
+        },
+        components: {
+            "counter-two": counter2
+        },
+        methods: {
+            handleInc: function (step) {
+                this.total = this.total + step;
+            }
+        }
+    });
+</script>
+</html>

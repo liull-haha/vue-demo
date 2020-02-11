@@ -1,0 +1,20 @@
+{
+  "totalMoney": 23000.0,
+  "goodList": [
+    {
+      "name": "shangping1",
+      "unit": 123.9,
+      "number": 10
+    },
+    {
+      "name": "shangping2",
+      "unit": 234.8,
+      "number": 10
+    },
+    {
+      "name": "shangping3",
+      "unit": 345.7,
+      "number": 10
+    }
+  ]
+}

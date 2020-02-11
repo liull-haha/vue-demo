@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shopcar</title>
+
+</head>
+<body>
+
+    <div id="shop">
+        <table style="border:1px solid #F00;">
+            <tr style="border:1px solid #F00;">
+                <td>商品</td>
+                <td>单价</td>
+                <td>数量</td>
+                <td>总价</td>
+                <td>操作</td>
+            </tr>
+            <tr v-for="item in goodList" style="border:1px solid #F00;">
+                <td>{{item.name}}</td>
+                <td>{{item.unit}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.number*item.unit}}</td>
+                <td>
+                    <a href="javascript:;" >添加</a>
+                    <a href="javascript:;" >删除</a>
+                </td>
+            </tr>
+            <tr style="border:1px solid #F00;">
+                <td colspan="5">
+                    总金额：<span style="color: red;">{{totalMoney}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-resource.js"></script>
+    <script src="../js/shop.js"></script>
+</body>
+</html>
