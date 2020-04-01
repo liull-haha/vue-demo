@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布订阅模式</title>
+    <script src="../js/vue.js"></script>
+</head>
+<!--
+v-slot缩写：# ,v-slot:you->#you,v-slot:default="props"->#default="props"
+-->
+<body>
+    <div id="root">
+        <child-one v-bind:content="'sgf'">
+            <!--
+            具名插槽slot=""可以用在任何标签上
+            -->
+            <slot-child-one :a-value="love" slot="love"></slot-child-one>
+            <slot-child-one :a-value="like" slot="like"></slot-child-one>
+        </child-one>
+
+        <child-one v-bind:content="'sgf'">
+            <!--
+            具名插槽指令v-slot只能用在<template>标签上
+            -->
+            <template #you>
+                {{love+like}}
+            </template>
+        </child-one>
+
+        <child-two :content2="'lll'">
+            <!--
+            让插槽内容能够访问子组件中才有的数据使用v-slot:name="name" 这里的name可以定义任何值
+            并且在使用<slot>标签上使用v-bind:name="list" 这里name可以定义任何值，list为子组件中数据
+            -->
+            <template #default="props">
+                {{love+like}}<h3>{{props.list}}</h3>
+            </template>
+
+        </child-two>
+        <div>
+            <button @click="buttonClick(2)">button</button>
+        </div>
+        <div>
+            <!--事件修饰符：阻止默认行为 @click.prevent-->
+            <form action="/www.baidu.com" @click.prevent>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    Vue.component("child-one",{
+        props: [ "content" ],
+        template: "<div> <slot name='love'></slot> {{content}} <slot name='like'></slot><h1><slot name='you'></slot></h1></div>"
+    });
+
+    Vue.component("child-two",{
+        props: [ "content2" ],
+        data: function () {
+            return {
+                list: [1,2,3,4]
+            }
+        },
+        template: "<div><div>{{content2}}</div><div><slot :list='list'></slot></div></div>"
+    });
+
+    /**
+     * 命名规则：
+     * 1.组件名是每个单词首字母大写（PascalCase）或者全小写用 - 连接（kebab-case） 。
+     *  在DOM中使用的时候，改为全小写， 单词之间用 - 连接。
+     *  2.声明 prop的时候，使用驼峰命名（myProps），模板中使用的时候，用 - 连接（my-props）
+     *  3.事件名：推荐都用 -连接来命名
+     */
+    Vue.component("slot-child-one",{
+        props: ["aValue"],
+        template: "<div><a href='counter.html'>{{aValue}}</a></div>"
+    });
+
+    var vm = new Vue({
+        el: "#root",
+        data: {
+            love: "I love",
+            like: " or like you"
+        },
+        methods: {
+            buttonClick: function (a){
+                console.log("11111");
+                console.log(a);
+            }
+        }
+    });
+</script>
+</html>
